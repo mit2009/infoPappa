@@ -23,6 +23,21 @@
       opacity: 0.9;
       line-height: normal;
     }
+    .cover {
+      position: fixed;
+      background-color: rgba(249, 219, 0, 0.8);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .covercenter {
+      position: fixed;
+      top: 50%;
+      width: 100%;
+      text-align: center;
+      transform: translateY(-50%);
+    }
     .outer-container {
       width: 100%;
       overflow: hidden;
@@ -116,6 +131,11 @@
 <div id="instafeed"></div>
   <div class="outer-container">
     <div class="container"><!--<div id="0" style="background-image: url(http://localhost:8000/images/1.jpg)" class="slide"></div>-->
+    </div>
+    <div class="cover">
+      <div class="covercenter">
+        PLEASE CLEAN UP YOUR AREA AND BE READY TO LEAVE
+      </div>
     </div>
   </div>
 </body>

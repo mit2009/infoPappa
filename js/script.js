@@ -28,8 +28,7 @@ const photosList = ["1.jpg",
                     "o3.JPG", 
                     "o4.JPG", 
                     "o5.PNG", 
-                    "o6.JPG",
-                    "o7.JPG"];
+                    "o6.JPG"];
 
 const photosShowMoreList = ["1.JPG", 
                     "2.JPG", 
