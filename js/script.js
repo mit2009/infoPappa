@@ -30,12 +30,7 @@ const photosList = ["1.jpg",
                     "o5.PNG", 
                     "o6.JPG"];
 
-const photosShowMoreList = ["1.JPG", 
-                    "2.JPG", 
-                    "3.JPG", 
-                    "4.JPG", 
-                    "5.PNG", 
-                    "6.JPG",
+const photosShowMoreList = [
                     "7.JPG",
                     "26.JPG",
                     "a.jpg",
@@ -85,7 +80,7 @@ instaWeight = 5;
 liveFeedWeight = 2;
 showMoreWeight = 4;
 timeWeight = 2;
-videoWeight = 2;
+videoWeight = 0 // 2;
 regPhotoWeight = 1;
 
 weightSum = quoteWeight + instaWeight + liveFeedWeight + showMoreWeight + videoWeight + regPhotoWeight + timeWeight;
@@ -100,6 +95,7 @@ var videoProb = timeProb + (videoWeight / weightSum);
 var instaList = [];
 var counter = 1;
 var prevSlide = '';
+var timeClosing;
 
 function checkReload() {
   $.get('reload', function(data) {
@@ -147,7 +143,49 @@ function formatQuote(handle, message) {
   return '<h1>'+handle+'</h1><h2>'+message+'</h2>'
 }
 
+function updateCountdownClock() {
+  t = new Date();
+  h = t.getHours();
+  m = t.getMinutes();
+  s = t.getSeconds();
+  totalSeconds = m*60+s;
+  secondsLeft = 60*60 - totalSeconds;
+  mLeft = Math.floor(secondsLeft / 60);
+  sLeft = secondsLeft % 60
+  mLeft = Math.max(mLeft, 0)
+  sLeft = Math.max(sLeft, 0)
+  // overflow
+  if (mLeft > 15) {
+    clearInterval(timeClosing);
+    $('.lab-closing').hide();
+    $('.lab-closed').show();
+  }
+  if (sLeft < 10) {
+    sLeft = '0' + sLeft;
+  }
+  $('.time-closing').text(mLeft+':'+sLeft);
+}
 function makeSlide() {
+
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // reminder to add 12 to hour
+
+  if (m >= 45 && m < 60 && h == 17) {
+    // lab is about to close
+    $('.lab-closing').show();
+    timeClosing = setInterval(updateCountdownClock, 200)
+  } else if (h >= 17 && h < 18) {
+    clearInterval(timeClosing);
+    $('.lab-closing').hide();
+    $('.lab-closed').show();
+  } else {
+    $('.lab-closing').hide();
+    $('.lab-closed').hide();
+  }
+
   var $newSlide = $('<div id="'+counter+'" class="slide"></div>');
   // $newSlide.css('-webkit-filter', 'grayscale(1)')
 
@@ -237,6 +275,8 @@ function makeSlide() {
 }
 
 function makeAndMoveSlides() {
+
+
   makeSlide();
   counter ++;
   // if (counter < 3) { //debugging
@@ -261,6 +301,7 @@ function init() {
   })
 
   makeSlide();
+
   counter ++;
   console.log('making initial slide');
 
