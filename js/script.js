@@ -5,6 +5,7 @@ const photosList = ["1.jpg",
                     "5.jpg", 
                     "6.jpg",
                     "7.jpg",
+                    "7.JPG",
                     "8.jpg",
                     "9.jpg",
                     "10.jpg",
@@ -28,16 +29,16 @@ const photosList = ["1.jpg",
                     "o3.JPG", 
                     "o4.JPG", 
                     "o5.PNG", 
-                    "o6.JPG"];
-
-const photosShowMoreList = [
-                    "7.JPG",
+                    "o6.JPG",
                     "26.JPG",
                     "a.jpg",
                     "b.jpg",
                     "c.jpg",
                     "d.jpg",
                     "david.png", "10_05l-1.jpg","10_05l-2.jpg","10_05l-3.jpg","10_05l-4.jpg","10_05l-5.jpg","10_05l-6.jpg","10_05l-7.jpg","10_05l-8.jpg","10_05l-9.jpg","10_05l-10.jpg","10_05l-11.jpg","10_05l-12.jpg","10_05l-13.jpg","10_05l-14.jpg"];
+
+const photosShowMoreList = [
+                    ];
 const quotes = [
   { handle: "@009minions", 
     message: "Let's get it... we'll call it 2.00b research" },
@@ -70,7 +71,7 @@ const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(211, 182, 13, 0.7)",
                 "rgba(229, 136, 0, 0.7)"]
 
-const videosList = ["plotter.mp4", "mounting.mp4"];
+const videosList = ["plotter.mp4", "mounting.mp4", "hardhatassembly.mp4", "safetyglasses.mp4", "assemblinghardhats.mp4"];
 
 const slideSpeed = 1500;
 const pauseTime = 10000 // 10000;
@@ -80,7 +81,7 @@ instaWeight = 5;
 liveFeedWeight = 2;
 showMoreWeight = 4;
 timeWeight = 2;
-videoWeight = 0 // 2;
+videoWeight = 1 // 2;
 regPhotoWeight = 1;
 
 weightSum = quoteWeight + instaWeight + liveFeedWeight + showMoreWeight + videoWeight + regPhotoWeight + timeWeight;
@@ -124,6 +125,9 @@ function getRandomVideo() {
 }
 
 function getRandomShowMoreImage() {
+  for (i = 1; i < 32; i++) {
+    photosShowMoreList.push(('b'+i+'.jpg'));
+  }
   return 'images/showmore/' + photosShowMoreList[Math.floor(Math.random()*photosShowMoreList.length)]
 }
 
@@ -173,11 +177,61 @@ function makeSlide() {
   var s = today.getSeconds();
   // reminder to add 12 to hour
 
-  if (m >= 45 && m < 60 && h == 17) {
+  console.log(m, h);
+
+  su = '';
+  if (h == 14) {
+    if (m >= 50) {
+      su = getSlideUpload(2)
+    } else if (m >= 40) {
+      su = getSlideUpload(1)
+    }
+  } else if (h == 15) {
+    if (m >= 50) {
+      su = getSlideUpload(8)
+    } else if (m >= 40) {
+      su = getSlideUpload(7)
+    } else if (m >= 30) {
+      su = getSlideUpload(6)
+    } else if (m >= 20) {
+      su = getSlideUpload(5)
+    } else if (m >= 10) {
+      su = getSlideUpload(4)
+    } else {
+      su = getSlideUpload(3)
+    }
+  } else if (h == 16) {
+    if (m >= 50) {
+      su = getSlideUpload(14)
+    } else if (m >= 40) {
+      su = getSlideUpload(13)
+    } else if (m >= 30) {
+      su = getSlideUpload(12)
+    } else if (m >= 20) {
+      su = getSlideUpload(11)
+    } else if (m >= 10) {
+      su = getSlideUpload(10)
+    } else {
+      su = getSlideUpload(9)
+    }
+  } else if (h == 17) {
+    if (m < 10) {
+      su = getSlideUpload(15)
+    } else if (m < 20) {
+      su = getSlideUpload(16)
+    }
+  }
+
+  if (su != '') {
+    $('.slide-upload').show();
+    $('.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
+  }
+  /*
+  if (m >= 45 && m < 60 && h == 16) {
     // lab is about to close
     $('.lab-closing').show();
     timeClosing = setInterval(updateCountdownClock, 200)
-  } else if (h >= 17 && h < 18) {
+  } else if ((h >= 17 && h < 18) || h == 21) {
     clearInterval(timeClosing);
     $('.lab-closing').hide();
     $('.lab-closed').show();
@@ -185,7 +239,7 @@ function makeSlide() {
     $('.lab-closing').hide();
     $('.lab-closed').hide();
   }
-
+  */
   var $newSlide = $('<div id="'+counter+'" class="slide"></div>');
   // $newSlide.css('-webkit-filter', 'grayscale(1)')
 
@@ -288,6 +342,12 @@ function makeAndMoveSlides() {
       }, (pauseTime + slideSpeed));
     }, pauseTime);
   // }
+}
+
+// Returns Slide Upload Cover
+function getSlideUpload(i) {
+  var sectionOrder = ['Red B', 'Blue B', 'Blue A', 'Pink A', 'Pink B', 'Yellow B', 'Red A', 'Silver A', 'Purple A', 'Orange B', 'Green A', 'Purple B', 'Green B', 'Yellow A', 'Orange A', 'Silver B'];
+  return sectionOrder[(i-1)]
 }
 
 function init() {
