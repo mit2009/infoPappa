@@ -223,8 +223,8 @@ function makeSlide() {
   }
 
   if (su != '') {
-    $('.slide-upload').show();
-    $('.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
+    // $(‘.slide-upload').show();
+    // $(‘.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
   }
   /*
   if (m >= 45 && m < 60 && h == 16) {
