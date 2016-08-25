@@ -378,14 +378,18 @@ function init() {
 
 $(function() {
   var feed = new Instafeed({
-      get: 'tagged',
-      tagName: '009mit',
-      clientId: '580b83bbc229433f8dd23c1806f9e7d8',
-      resolution: 'standard_resolution',
-      template: '<div><span class="img">{{image}}</span><span class="caption">{{caption}}</span></div>',
-      after: function() {
-        init();
-      }
+    get:'tagged',
+    tagName: '009mit',
+    userId: '009mit',
+    clientId: 'd6d1c595067645669034ee9081938938',
+    clientSecret: '80e6413e820e47be89f360631ad72538',
+    accessToken: '1507599532.d6d1c59.de0a98d3d0bd4de2b781622be2a950c9',
+    limit:'60',
+    resolution: 'standard_resolution',
+    template: '<div><span class="img">{{image}}</span><span class="caption">{{caption}}</span></div>',
+    after: function() {
+      init();
+    }
   });
   feed.run();
   checkReload();
