@@ -297,10 +297,10 @@ function makeSlide() {
     $instaImage = $('<div class="instaContainer"></div>')
     $instaImage.css('height', height)
       .css('width', height)
-      .css('background-image', 'url("' + insta.img + '")');
+      .css('background-image', 'url("' + insta.display_src + '")');
     $newSlide.addClass('instaImage');
     $newSlide.append($instaImage);
-    $newSlide.append('<div class="instaTextContainer">' + formatQuote('#009 Instagram', insta.instaCaption) + '</div>');
+    $newSlide.append('<div class="instaTextContainer">' + formatQuote('#009 Instagram', insta.caption) + '</div>');
 
   } else if (nextSlide == 'LIVEFEED') {
     var cameraIDList = ['Wu9P2I', 
@@ -369,14 +369,6 @@ function getSlideUpload(i) {
 
 function init() {
   // generate slide 1
-
-  $('#instafeed div').each(function() {
-    instaList.push({
-      img: $(this).find('.img').text(),
-      instaCaption: $(this).find('.caption').text()
-    })
-  })
-
   makeSlide();
 
   counter ++;
@@ -393,22 +385,9 @@ function init() {
 
 }
 
+//load all the instagram photos before grabbing anything else 
+var instaGrabber = $.getJSON("insta.json", function(json) {
+    instaList = instaList.concat(json); 
+});
 
-$(function() {
-  var feed = new Instafeed({
-    get:'tagged',
-    tagName: '009mit',
-    userId: '009mit',
-    clientId: 'd6d1c595067645669034ee9081938938',
-    clientSecret: '80e6413e820e47be89f360631ad72538',
-    accessToken: '1507599532.d6d1c59.de0a98d3d0bd4de2b781622be2a950c9',
-    limit:'60',
-    resolution: 'standard_resolution',
-    template: '<div><span class="img">{{image}}</span><span class="caption">{{caption}}</span></div>',
-    after: function() {
-      init();
-    }
-  });
-  feed.run();
-  checkReload();
-})
+instaGrabber.complete(init);
