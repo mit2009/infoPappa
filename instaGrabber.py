@@ -1,9 +1,8 @@
-from django import template
 import requests, json
 
-register = template.Library()
+# register = template.Library()
 
-@register.simple_tag
+# @register.simple_tag
 def instafeed(hashtag, count):
     """Simply use with autoescapeoff, for example: {% autoescape off %}{% instafeed 'manifeste16' 8 %}{% endautoescape %}"""
     
@@ -16,7 +15,7 @@ def instafeed(hashtag, count):
     r = requests.get(query_url + params)
     j = json.loads(r.content.decode('utf-8'))
 
-    file = open("./display/public/insta.json", "w")
+    file = open("/Users/cadlab/Code/infoPappa/display/public/insta.json", "w")
     json.dump(j['media']['nodes'], file)
     file.close()
 
