@@ -1,57 +1,8 @@
-const photosList = ["1.jpg", 
-                    "2.jpg", 
-                    "3.jpg", 
-                    "4.jpg", 
-                    // "5.jpg", 
-                    "6.jpg",
-                    "7.jpg",
-                    // "7.JPG",
-                    // "8.jpg",
-                    "9.jpg",
-                    "10.jpg",
-                    "11.jpg",
-                    "12.jpg",
-                    "13.jpg",
-                    // "14.jpg",
-                    "15.jpg",
-                    "16.jpg",
-                    "17.jpg",
-                    // "18.jpg",
-                    // "19.jpg",
-                    "20.jpg",
-                    "21.jpg",
-                    "22.jpg",
-                    // "23.jpg",
-                    // "24.jpg",
-                    "25.jpg",
-                    "26.JPG", 
-                    "o1.JPG", 
-                    "o2.JPG", 
-                    "o3.JPG", 
-                    // "o4.JPG", 
-                    "o5.PNG", 
-                    "o6.JPG",
-                    "a.jpg",
-                    "b.jpg",
-                    "c.jpg",
-                    "d.jpg",
-                    "david.png", 
-                    // "10_05l-1.jpg",
-                    "10_05l-2.jpg",
-                    "10_05l-3.jpg",
-                    "10_05l-4.jpg",
-                    "10_05l-5.jpg",
-                    "10_05l-6.jpg",
-                    "10_05l-7.jpg",
-                    // "10_05l-8.jpg",
-                    "10_05l-9.jpg",
-                    "10_05l-10.jpg",
-                    // "10_05l-11.jpg",
-                    // "10_05l-12.jpg",
-                    "10_05l-13.jpg",
-                    "10_05l-14.jpg"];
+var readyToInit = false;
+var photosList = [];
+var photosShowMoreList = [ ];
+const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
 
-const photosShowMoreList = [ ];
 const quotes = [
   { handle: "@009minions", 
     message: "Let's get it... we'll call it 2.00b research" },
@@ -130,7 +81,7 @@ function moveSlide(id) {
 }
 
 function getRandomImage() {
-  return 'images/' + photosList[Math.floor(Math.random()*photosList.length)]
+  return gallery_url + photosList[Math.floor(Math.random()*photosList.length)]
 }
 
 function getRandomVideo() {
@@ -138,10 +89,7 @@ function getRandomVideo() {
 }
 
 function getRandomShowMoreImage() {
-  for (i = 1; i < 23; i++) {
-    photosShowMoreList.push(('c'+i+'.jpg'));
-  }
-  return 'images/showmore/' + photosShowMoreList[Math.floor(Math.random()*photosShowMoreList.length)]
+  return gallery_url + photosShowMoreList[Math.floor(Math.random()*photosShowMoreList.length)]
 }
 
 function getRandomQuote() {
@@ -304,9 +252,9 @@ function makeSlide() {
 
   } else if (nextSlide == 'LIVEFEED') {
     var cameraIDList = ['Wu9P2I', 
-    // 'as1hHV', 
-    // 'Xr6ruW', 
-    // '4MkaKg'
+    'as1hHV', 
+    'Xr6ruW', 
+    'MEKmB8'
     ];
     var cameraID = cameraIDList[Math.floor(Math.random()*cameraIDList.length)];
     $newSlide.append('<iframe style="top: -5%; left: -30%; position: relative;" type="text/html" frameborder="0" width="160%" height="110%" src="//video.nest.com/embedded/live/' + cameraID + '?autoplay=1" /></iframe>');
@@ -367,7 +315,17 @@ function getSlideUpload(i) {
   return sectionOrder[(i-1)]
 }
 
+function grabPhotos() {
+  photosGrabber.complete(init); 
+}
+
 function init() {
+
+  if (!readyToInit) {
+    readyToInit = true;
+    console.log("yup ready");
+    return;
+  }
   // generate slide 1
   makeSlide();
 
@@ -390,4 +348,22 @@ var instaGrabber = $.getJSON("insta.json", function(json) {
     instaList = instaList.concat(json); 
 });
 
+var photosGrabber = $.getJSON("images.json", function(json) {
+  for (var key in json[0]) {
+    if (json[0].hasOwnProperty(key) && key.toString() != "__comment") {
+        for (var i = 0; i < json[0][key].length; i++)
+        photosList = photosList.concat(key + json[0][key][i] + ".jpg"); 
+    }
+  }
+
+  for (var key in json[1]) {
+    if (json[1].hasOwnProperty(key) && key.toString() != "__comment") {
+        for (var i = 0; i < json[1][key].length; i++)
+        photosShowMoreList = photosShowMoreList.concat(key + json[1][key][i] + ".jpg"); 
+    }
+  }
+    console.log(photosList);
+});
+
 instaGrabber.complete(init);
+photosGrabber.complete(init);
