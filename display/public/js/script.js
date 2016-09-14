@@ -323,9 +323,9 @@ function init() {
 
   if (!readyToInit) {
     readyToInit = true;
-    console.log("yup ready");
     return;
   }
+
   // generate slide 1
   makeSlide();
 
@@ -352,14 +352,14 @@ var photosGrabber = $.getJSON("images.json", function(json) {
   for (var key in json[0]) {
     if (json[0].hasOwnProperty(key) && key.toString() != "__comment") {
         for (var i = 0; i < json[0][key].length; i++)
-        photosList = photosList.concat(key + json[0][key][i] + ".jpg"); 
+        photosList = photosList.concat(key + "l-" + json[0][key][i] + ".jpg"); 
     }
   }
 
   for (var key in json[1]) {
     if (json[1].hasOwnProperty(key) && key.toString() != "__comment") {
         for (var i = 0; i < json[1][key].length; i++)
-        photosShowMoreList = photosShowMoreList.concat(key + json[1][key][i] + ".jpg"); 
+        photosShowMoreList = photosShowMoreList.concat(key + "l-" + json[1][key][i] + ".jpg"); 
     }
   }
     console.log(photosList);
