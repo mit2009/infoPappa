@@ -15,8 +15,8 @@ def instafeed(hashtag, count):
     r = requests.get(query_url + params)
     j = json.loads(r.content.decode('utf-8'))
 
-    file = open("/Users/cadlab/Code/infoPappa/display/public/insta.json", "w")
+    file = open("/Volumes/courses/2.009/2.009, 2016/infoPappa/display/public/insta.json", "w")
     json.dump(j['media']['nodes'], file)
     file.close()
 
-instafeed('009mit', 10);
+instafeed('009mit', 21);

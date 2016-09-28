@@ -1,32 +1,10 @@
 var readyToInit = false;
 var photosList = [];
-var photosShowMoreList = [ ];
-const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
+var photosShowMoreList = [];
+var quotesList = [];
+var videosList = [];
 
-const quotes = [
-  { handle: "@009minions", 
-    message: "Let's get it... we'll call it 2.00b research" },
-  { handle: "@009minions", 
-    message: "They're cute, they look like mice with wings!" },
-  { handle: "@009minions", 
-    message: "I might steal your pants, David" },
-  { handle: "Overheard in Pappalardo", 
-    message: "You should try a little harder" },
-  { handle: "@009minions", 
-    message: "Here, bring this meowth with you" },
-  { handle: "@009minions", 
-    message: "2.009 is my exercise" },
-  { handle: "Tweet Tweet!", 
-    message: "Follow @PappalardoLab on Twitter!" },
-  { handle: "Instagram!", 
-    message: "Use #009mit to see your picture here!" },
-  { handle: "@009minions", 
-    message: "We can fit a lot of tongues on one bed" },
-  { handle: "#009mit", 
-    message: "Use our hash tag #009mit on Instagram!" },
-  { handle: "send us content!", 
-    message: "email exciting photos/videos to 2009ta@mit.edu :)" },
-  ]
+const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
 
 const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(58, 47, 204, 0.7)",
@@ -35,10 +13,8 @@ const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(211, 182, 13, 0.7)",
                 "rgba(229, 136, 0, 0.7)"]
 
-const videosList = ["plotter.mp4", "mounting.mp4", "hardhatassembly.mp4", "safetyglasses.mp4", "assemblinghardhats.mp4"];
-
 const slideSpeed = 1500;
-const pauseTime = 10000 // 10000;
+const pauseTime = 10000;
 
 quoteWeight = 1;
 instaWeight = 5;
@@ -93,7 +69,7 @@ function getRandomShowMoreImage() {
 }
 
 function getRandomQuote() {
-  return quotes[Math.floor(Math.random()*quotes.length)]
+  return quotesList[Math.floor(Math.random()*quotesList.length)]
 }
 
 function getRandomColor() {
@@ -287,7 +263,7 @@ function makeSlide() {
 
   } else {
     // Generate just a plain ol' photo
-    $newSlide.css('background-image', 'url("' + getRandomImage() + '")');
+    $newSlide.css('background-image', 'url("' + getRandomShowMoreImage() + '")');
   }
 
   $('.container').append($newSlide)
@@ -315,12 +291,7 @@ function getSlideUpload(i) {
   return sectionOrder[(i-1)]
 }
 
-function grabPhotos() {
-  photosGrabber.complete(init); 
-}
-
 function init() {
-
   if (!readyToInit) {
     readyToInit = true;
     return;
@@ -348,21 +319,33 @@ var instaGrabber = $.getJSON("insta.json", function(json) {
     instaList = instaList.concat(json); 
 });
 
-var photosGrabber = $.getJSON("images.json", function(json) {
-  for (var key in json[0]) {
-    if (json[0].hasOwnProperty(key) && key.toString() != "__comment") {
-        for (var i = 0; i < json[0][key].length; i++)
-        photosList = photosList.concat(key + "l-" + json[0][key][i] + ".jpg"); 
+function photoProcessor(datalist, array) {
+  for (var key in datalist) {
+    if (datalist.hasOwnProperty(key) && key.toString() != "__comment") {
+        for (var i = 0; i < datalist[key].length; i++) {
+            var prefix = key;
+            var suffix = "";
+            if (key.indexOf("|") >= 0) {
+              prefix = key.substring(0,key.indexOf("|"));
+              suffix = "_" + key.substring(key.indexOf("|")+1);
+            }
+            array = array.concat(prefix + "m-" + datalist[key][i] + suffix + ".jpg"); 
+        }
     }
   }
+  return array;
+}
 
-  for (var key in json[1]) {
-    if (json[1].hasOwnProperty(key) && key.toString() != "__comment") {
-        for (var i = 0; i < json[1][key].length; i++)
-        photosShowMoreList = photosShowMoreList.concat(key + "l-" + json[1][key][i] + ".jpg"); 
-    }
-  }
-    console.log(photosList);
+var photosGrabber = $.getJSON("data.json", function(json) {
+  console.log("helllo");
+
+  photosList = photoProcessor(json[0], photosList);
+  photosShowMoreList = photoProcessor(json[1], photosShowMoreList); // just a plain photo
+
+  videosList = videosList.concat(json[2]["videos"]);
+  quotesList = quotesList.concat(json[2]["quotes"]);
+  console.log(quotesList);
+
 });
 
 instaGrabber.complete(init);

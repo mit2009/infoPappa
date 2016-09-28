@@ -1,0 +1,53 @@
+[{
+"__comment":"the pictures below are generally landscape photos without faces (will be covered by timestamp) (8)",
+"09_26":[1,13,16,25,37,14],
+"09_21":[1,16],
+"09_20":[8,12,14],
+"09_19":[16,19],
+"09_16":[6,19,20],
+"09_15|lab":[6,23],
+"09_12":[17,21,40,41], 
+"09_13":[3,4,8,32],
+"09_09":[7,9,23,24,28],
+"09_10":[1,6,7,9,17]
+  },{
+"__comment":"the pictures below are generally landscape photos of people or interesting things in class (3,4,8)",
+"09_21":[7,10,12],
+"09_20":[11,13,27],
+"09_19":[9],
+"09_16":[1,16,23],
+"09_16|observation":[8,11],
+"09_15|lab":[9,11,13],
+"09_15|conflict":[4],
+"09_14":[25,13,3],
+"09_12":[1,6,12,17,18,45,46,47,48,49,50,51,52], 
+"09_13":[6,14,18],
+"09_09":[1,2,8,20],
+"09_10":[1,16,19],
+"09_07":[13,21]
+  },{
+"__comment":"other info!",
+"videos":[ "reveal.mp4"],
+"quotes":[  { "handle": "@009minions", 
+    "message": "\"Snapchat is pretty complicated.\"<br>\"Yeah, I watched a tutorial on youtube.\"<br>#guessTheTAs" },
+  { "handle": "@009minions", 
+    "message": "I think I should return my diploma." },
+  { "handle": "@009minions", 
+    "message": "I can't believe you bAXstabbed me." },
+  { "handle": "Overheard in Pappalardo", 
+    "message": "You should try a little harder." },
+  { "handle": "@009minions", 
+    "message": "Do you ever go to drive.google.com when you want to drive somewhere? It drives me crazy." },
+  { "handle": "@009minions", 
+    "message": "Puh-leaseeeeee. I say intelligent things.... sometimes." },
+  { "handle": "Tweet Tweet!", 
+    "message": "Follow @PappalardoLab on Twitter!" },
+  { "handle": "Instagram!", 
+    "message": "Use #009mit to see your picture here!" },
+  { "handle": "#009mit", 
+    "message": "Use our hashtag #009mit on Instagram!" },
+  { "handle": "send us content!", 
+    "message": "email exciting photos/videos to 2009ta@mit.edu :)" }]
+ }]
+
+
