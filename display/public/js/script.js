@@ -160,10 +160,10 @@ function makeSlide() {
   }
 
   if (su != '') {
-    // $(‘.slide-upload').show();
-    // $(‘.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
+    // $('.slide-upload').show();
+    // $('.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
   }
-  /*
+  
   if (m >= 45 && m < 60 && h == 16) {
     // lab is about to close
     $('.lab-closing').show();
@@ -176,7 +176,7 @@ function makeSlide() {
     $('.lab-closing').hide();
     $('.lab-closed').hide();
   }
-  */
+  
   var $newSlide = $('<div id="'+counter+'" class="slide"></div>');
   // $newSlide.css('-webkit-filter', 'grayscale(1)')
 
@@ -201,6 +201,7 @@ function makeSlide() {
   }
 
   prevSlide = nextSlide;
+  nextSlide = 'INSTA';
 
   if (nextSlide == 'QUOTE') {
     // Generate a Random Quote
@@ -232,7 +233,8 @@ function makeSlide() {
     'Xr6ruW', 
     'MEKmB8'
     ];
-    var cameraID = cameraIDList[Math.floor(Math.random()*cameraIDList.length)];
+    var cameraIndex = Math.floor(Math.random()*cameraIDList.length);
+    var cameraID = cameraIDList[cameraIndex];
     $newSlide.append('<iframe style="top: -5%; left: -30%; position: relative;" type="text/html" frameborder="0" width="160%" height="110%" src="//video.nest.com/embedded/live/' + cameraID + '?autoplay=1" /></iframe>');
   } else if (nextSlide == 'SHOWMOREPHOTO') {
     // Generate just a plain ol' photo
@@ -317,6 +319,7 @@ function init() {
 //load all the instagram photos before grabbing anything else 
 var instaGrabber = $.getJSON("insta.json", function(json) {
     instaList = instaList.concat(json); 
+    console.log(instaList);
 });
 
 function photoProcessor(datalist, array) {

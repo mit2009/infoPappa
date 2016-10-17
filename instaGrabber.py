@@ -19,4 +19,4 @@ def instafeed(hashtag, count):
     json.dump(j['media']['nodes'], file)
     file.close()
 
-instafeed('009mit', 21);
+instafeed('009mit', 16);
