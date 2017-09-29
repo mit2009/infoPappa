@@ -14,8 +14,8 @@ const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(211, 182, 13, 0.7)",
                 "rgba(229, 136, 0, 0.7)"]
 
-const slideSpeed = 500;
-const pauseTime = 1000;
+const slideSpeed = 1500;
+const pauseTime = 10000;
 
 // quoteWeight = 1;
 // instaWeight = 5;
