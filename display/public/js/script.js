@@ -1,10 +1,10 @@
 var readyToInit = false;
-var photosList = [];
-var photosshowPhotoList = [];
 var quotesList = [];
+var photoURLlist = [];
 var videosList = [];
 
 const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
+const base_url = 'http://web.mit.edu/2.009/';
 // const gallery2_url = 'http://web.mit.edu/2.009/slideshow2/images/';
 
 const colors = ["rgba(255, 0, 0, 0.7)",
@@ -14,8 +14,8 @@ const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(211, 182, 13, 0.7)",
                 "rgba(229, 136, 0, 0.7)"]
 
-const slideSpeed = 1500;
-const pauseTime = 10000;
+const slideSpeed = 500;
+const pauseTime = 1000;
 
 // quoteWeight = 1;
 // instaWeight = 5;
@@ -25,9 +25,9 @@ const pauseTime = 10000;
 // videoWeight = 1; // 2;
 
 quoteWeight = 1; // works 2017
-instaWeight = 1; // works 2017
+instaWeight = 5; // works 2017
 liveFeedWeight = 0;
-showPhotoWeight = 1; // works 2017
+showPhotoWeight = 4; // works 2017
 timeWeight = 1; // works 2017
 videoWeight = 0; // 2;
 
@@ -45,15 +45,19 @@ var counter = 1;
 var prevSlide = '';
 var timeClosing;
 
+// function checkReload() {
+//   $.get('reload', function(data) {
+//     console.log('checking reload...', data)
+//     if (data != localStorage.getItem("reloadCheck")) {
+//       localStorage.setItem("reloadCheck", data)
+//       console.log('reloading...')
+//       location.reload();  
+//     }
+//   });
+// }
+
 function checkReload() {
-  $.get('reload', function(data) {
-    console.log('checking reload...', data)
-    if (data != localStorage.getItem("reloadCheck")) {
-      localStorage.setItem("reloadCheck", data)
-      console.log('reloading...')
-      location.reload();  
-    }
-  });
+  console.log("bypassing checkreload")
 }
 
 function moveSlide(id) {
@@ -64,15 +68,12 @@ function moveSlide(id) {
 }
 
 function getRandomImage() {
-  return photosList[Math.floor(Math.random()*photosList.length)]
+  console.log("getting random image")
+  return photoURLlist[Math.floor(Math.random()*photoURLlist.length)]
 }
 
 function getRandomVideo() {
   return 'videos/' + videosList[Math.floor(Math.random()*videosList.length)]
-}
-
-function getRandomshowPhotoImage() {
-  return photosshowPhotoList[Math.floor(Math.random()*photosshowPhotoList.length)]
 }
 
 function getRandomQuote() {
@@ -96,6 +97,10 @@ function updateCountdownClock() {
   h = t.getHours();
   m = t.getMinutes();
   s = t.getSeconds();
+  // h = 12;
+  // m = 30;
+  // s = 30;
+
   totalSeconds = m*60+s;
   secondsLeft = 60*60 - totalSeconds;
   mLeft = Math.floor(secondsLeft / 60);
@@ -119,6 +124,9 @@ function makeSlide() {
   var h = today.getHours();
   var m = today.getMinutes();
   var s = today.getSeconds();
+  // var h = 12;
+  // var m = 30;
+  // var s = 30;
   // reminder to add 12 to hour
 
   console.log(h, m);
@@ -174,6 +182,7 @@ function makeSlide() {
   if (m >= 45 && m < 60 && h == 16) {
     // lab is about to close
     $('.lab-closing').show();
+    $('.lab-closed').hide();
     timeClosing = setInterval(updateCountdownClock, 200)
   } else if ((h >= 17 && h < 18) || h == 21) {
     clearInterval(timeClosing);
@@ -183,13 +192,9 @@ function makeSlide() {
     $('.lab-closing').hide();
     $('.lab-closed').hide();
   }
-
-  console.log("breakpoint")
   
   var $newSlide = $('<div id="'+counter+'" class="slide"></div>');
   // $newSlide.css('-webkit-filter', 'grayscale(1)')
-
-  console.log("2")
 
   var nextSlide = '';
   while (nextSlide == '' || nextSlide == prevSlide) {
@@ -251,7 +256,7 @@ function makeSlide() {
     $newSlide.append('<iframe style="top: -5%; left: -30%; position: relative;" type="text/html" frameborder="0" width="160%" height="110%" src="//video.nest.com/embedded/live/' + cameraID + '?autoplay=1" /></iframe>');
   } else if (nextSlide == 'SHOWPHOTO') {
     // Generate just a plain ol' photo
-    $newSlide.css('background-image', 'url("' + getRandomshowPhotoImage() + '")');
+    $newSlide.css('background-image', 'url("' + getRandomImage() + '")');
 
   } else if (nextSlide == 'TIME') {
     // Generate the time
@@ -282,7 +287,7 @@ function makeSlide() {
 
   } else {
     // Generate just a plain ol' photo
-    $newSlide.css('background-image', 'url("' + getRandomshowPhotoImage() + '")');
+    $newSlide.css('background-image', 'url("' + getRandomImage() + '")');
   }
 
   $('.container').append($newSlide)
@@ -291,14 +296,17 @@ function makeSlide() {
 function makeAndMoveSlides() {
 
 
+  console.log("making slide");
   makeSlide();
+  console.log("made slide");
   counter ++;
-  console.log(slideSpeed);
-  console.log(pauseTime);
+  console.log("updated counter");
   // if (counter < 3) { //debugging
     setTimeout(function() {
       checkReload();
+      console.log("checked reload")
       moveSlide(counter-1);
+      console.log("moved slide")
       setTimeout(function() {
         makeAndMoveSlides();
       }, (pauseTime + slideSpeed));
@@ -329,6 +337,8 @@ function init() {
     location.reload(); 
   }, 300000);
 
+  console.log('set timeout');
+
   setTimeout(function() {
     makeAndMoveSlides();
   }, pauseTime);
@@ -340,7 +350,7 @@ var instaGrabber = $.getJSON("insta.json", function(json) {
     instaList = instaList.concat(json); 
 });
 
-function photoProcessor(url, datalist, array) {
+function manualPhotoProcessor(url, datalist, array) {
   for (var key in datalist) {
     if (datalist.hasOwnProperty(key) && key.toString() != "__comment") {
         for (var i = 0; i < datalist[key].length; i++) {
@@ -357,11 +367,66 @@ function photoProcessor(url, datalist, array) {
   return array;
 }
 
+function makePhotoFilter() {
+  var i = 0;
+  var photos_filter = [];
+  for (var j in photosList) {
+    var line = photosList[j];
+    var prefix = line[0];
+    var delimiter = line[3];
+    var count = line[1];
+    var suffix = line[5];
+
+    for (var k = 1; k <= count; k++) {
+      var imgURL = base_url + prefix + delimiter + k + suffix;
+      photos_filter.push({'url': imgURL, 'landscape': null})
+    }
+
+  }
+
+  return photos_filter;
+}
+
+function checkPhoto(i, array, photos_filter) {
+  if (i < photos_filter.length) {
+    console.log("checking photo " + i + " which is " + photos_filter[i]['url']);
+    var img = new Image();
+    img.onload = function() {
+      console.log('img with url ' + img.src + ' is ' + img.width + 'x' + img.height + ' and it element number ' + i);
+      if (img.width >= img.height) {
+        photos_filter[i]['landscape'] = true;
+      } else {
+        photos_filter[i]['landscape'] = false;
+      }
+      checkPhoto(i + 1, array, photos_filter);
+    }
+    img.src = photos_filter[i]['url'];
+  } else {
+    extractPhotos(array, photos_filter)
+  }
+}
+
+function extractPhotos(array, photos_filter) {
+  console.log("extracting photos")
+  for (var i in photos_filter) {
+    var entry = photos_filter[i];
+    if (entry['landscape']) {
+      console.log("pushing to array");
+      array.push(entry['url']);
+    }
+  }
+}
+
 var photosGrabber = $.getJSON("data.json", function(json) {
-  photosList = photoProcessor(gallery_url, json[0], photosList);
-  photosList.concat(photoProcessor(gallery_url, json[1], photosList));
-  photosshowPhotoList = photoProcessor(gallery_url, json[2], photosshowPhotoList); // just a plain photo
-  photosshowPhotoList.concat(photoProcessor(gallery_url, json[3], photosshowPhotoList)); // just a plain photo
+  // photosList = manualPhotoProcessor(gallery_url, json[0], photosList);
+  // photosList.concat(manualPhotoProcessor(gallery_url, json[1], photosList));
+  // photosshowPhotoList = manualPhotoProcessor(gallery_url, json[2], photosshowPhotoList); // just a plain photo
+  // photosshowPhotoList.concat(manualPhotoProcessor(gallery_url, json[3], photosshowPhotoList)); // just a plain photo
+  console.log("making list")
+  var photos_filter = makePhotoFilter();
+  checkPhoto(0, photoURLlist, photos_filter);
+  console.log("made list")
+
 
   videosList = videosList.concat(json[4]["videos"]);
   quotesList = quotesList.concat(json[4]["quotes"]);
