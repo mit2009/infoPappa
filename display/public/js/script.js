@@ -1,10 +1,11 @@
 var readyToInit = false;
 var photosList = [];
-var photosShowMoreList = [];
+var photosshowPhotoList = [];
 var quotesList = [];
 var videosList = [];
 
 const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
+// const gallery2_url = 'http://web.mit.edu/2.009/slideshow2/images/';
 
 const colors = ["rgba(255, 0, 0, 0.7)",
                 "rgba(58, 47, 204, 0.7)",
@@ -16,29 +17,27 @@ const colors = ["rgba(255, 0, 0, 0.7)",
 const slideSpeed = 1500;
 const pauseTime = 10000;
 
-quoteWeight = 1;
-instaWeight = 5;
-liveFeedWeight = 2;
-showMoreWeight = 4;
-timeWeight = 2;
-videoWeight = 1; // 2;
-regPhotoWeight = 1;
+// quoteWeight = 1;
+// instaWeight = 5;
+// liveFeedWeight = 2;
+// showPhotoWeight = 4;
+// timeWeight = 2;
+// videoWeight = 1; // 2;
 
-quoteWeight = 0;
-instaWeight = 0;
+quoteWeight = 1; // works 2017
+instaWeight = 1; // works 2017
 liveFeedWeight = 0;
-showMoreWeight = 0;
-timeWeight = 0;
+showPhotoWeight = 1; // works 2017
+timeWeight = 1; // works 2017
 videoWeight = 0; // 2;
-regPhotoWeight = 1;
 
-weightSum = quoteWeight + instaWeight + liveFeedWeight + showMoreWeight + videoWeight + regPhotoWeight + timeWeight;
+weightSum = quoteWeight + instaWeight + liveFeedWeight + showPhotoWeight + videoWeight + timeWeight;
 
 var quoteProb = (quoteWeight / weightSum);
 var instaProb = quoteProb + (instaWeight / weightSum);
 var liveFeedProb = instaProb + (liveFeedWeight / weightSum);
-var showMoreProb = liveFeedProb + (showMoreWeight / weightSum);
-var timeProb = showMoreProb + (timeWeight / weightSum);
+var showPhotoProb = liveFeedProb + (showPhotoWeight / weightSum);
+var timeProb = showPhotoProb + (timeWeight / weightSum);
 var videoProb = timeProb + (videoWeight / weightSum);
 
 var instaList = [];
@@ -65,15 +64,15 @@ function moveSlide(id) {
 }
 
 function getRandomImage() {
-  return gallery_url + photosList[Math.floor(Math.random()*photosList.length)]
+  return photosList[Math.floor(Math.random()*photosList.length)]
 }
 
 function getRandomVideo() {
   return 'videos/' + videosList[Math.floor(Math.random()*videosList.length)]
 }
 
-function getRandomShowMoreImage() {
-  return gallery_url + photosShowMoreList[Math.floor(Math.random()*photosShowMoreList.length)]
+function getRandomshowPhotoImage() {
+  return photosshowPhotoList[Math.floor(Math.random()*photosshowPhotoList.length)]
 }
 
 function getRandomQuote() {
@@ -122,55 +121,55 @@ function makeSlide() {
   var s = today.getSeconds();
   // reminder to add 12 to hour
 
-  console.log(m, h);
+  console.log(h, m);
 
-  su = '';
-  if (h == 14) {
-    if (m >= 50) {
-      su = getSlideUpload(2)
-    } else if (m >= 40) {
-      su = getSlideUpload(1)
-    }
-  } else if (h == 15) {
-    if (m >= 50) {
-      su = getSlideUpload(8)
-    } else if (m >= 40) {
-      su = getSlideUpload(7)
-    } else if (m >= 30) {
-      su = getSlideUpload(6)
-    } else if (m >= 20) {
-      su = getSlideUpload(5)
-    } else if (m >= 10) {
-      su = getSlideUpload(4)
-    } else {
-      su = getSlideUpload(3)
-    }
-  } else if (h == 16) {
-    if (m >= 50) {
-      su = getSlideUpload(14)
-    } else if (m >= 40) {
-      su = getSlideUpload(13)
-    } else if (m >= 30) {
-      su = getSlideUpload(12)
-    } else if (m >= 20) {
-      su = getSlideUpload(11)
-    } else if (m >= 10) {
-      su = getSlideUpload(10)
-    } else {
-      su = getSlideUpload(9)
-    }
-  } else if (h == 17) {
-    if (m < 10) {
-      su = getSlideUpload(15)
-    } else if (m < 20) {
-      su = getSlideUpload(16)
-    }
-  }
+  // su = '';
+  // if (h == 14) {
+  //   if (m >= 50) {
+  //     su = getSlideUpload(2)
+  //   } else if (m >= 40) {
+  //     su = getSlideUpload(1)
+  //   }
+  // } else if (h == 15) {
+  //   if (m >= 50) {
+  //     su = getSlideUpload(8)
+  //   } else if (m >= 40) {
+  //     su = getSlideUpload(7)
+  //   } else if (m >= 30) {
+  //     su = getSlideUpload(6)
+  //   } else if (m >= 20) {
+  //     su = getSlideUpload(5)
+  //   } else if (m >= 10) {
+  //     su = getSlideUpload(4)
+  //   } else {
+  //     su = getSlideUpload(3)
+  //   }
+  // } else if (h == 16) {
+  //   if (m >= 50) {
+  //     su = getSlideUpload(14)
+  //   } else if (m >= 40) {
+  //     su = getSlideUpload(13)
+  //   } else if (m >= 30) {
+  //     su = getSlideUpload(12)
+  //   } else if (m >= 20) {
+  //     su = getSlideUpload(11)
+  //   } else if (m >= 10) {
+  //     su = getSlideUpload(10)
+  //   } else {
+  //     su = getSlideUpload(9)
+  //   }
+  // } else if (h == 17) {
+  //   if (m < 10) {
+  //     su = getSlideUpload(15)
+  //   } else if (m < 20) {
+  //     su = getSlideUpload(16)
+  //   }
+  // }
 
-  if (su != '') {
-    // $('.slide-upload').show();
-    // $('.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
-  }
+  // if (su != '') {
+  //   // $('.slide-upload').show();
+  //   // $('.slide-upload').find('.lab-closed-msg').html('<span class="heading">SLIDE UPLOAD:</span> <br />' + su)
+  // }
   
   if (m >= 45 && m < 60 && h == 16) {
     // lab is about to close
@@ -184,9 +183,13 @@ function makeSlide() {
     $('.lab-closing').hide();
     $('.lab-closed').hide();
   }
+
+  console.log("breakpoint")
   
   var $newSlide = $('<div id="'+counter+'" class="slide"></div>');
   // $newSlide.css('-webkit-filter', 'grayscale(1)')
+
+  console.log("2")
 
   var nextSlide = '';
   while (nextSlide == '' || nextSlide == prevSlide) {
@@ -197,8 +200,8 @@ function makeSlide() {
       nextSlide = 'INSTA';
     } else if (r < liveFeedProb) {
       nextSlide = 'LIVEFEED';
-    } else if (r < showMoreProb) {
-      nextSlide = 'SHOWMOREPHOTO'
+    } else if (r < showPhotoProb) {
+      nextSlide = 'SHOWPHOTO'
     } else if (r < timeProb) {
       nextSlide = 'TIME'
     } else if (r < videoProb) {
@@ -209,12 +212,14 @@ function makeSlide() {
   }
 
   prevSlide = nextSlide;
-  nextSlide = 'INSTA';
+
+  console.log("next slide will be", nextSlide);
 
   if (nextSlide == 'QUOTE') {
     // Generate a Random Quote
 
     var q = getRandomQuote();
+    console.log(q);
     $quoteBox = $('<div class="quotebox" style="background-color: ' + getRandomColor() + ';"><div class="quotecenter">' + formatQuote(q.handle, q.message) + '</div></div>');
     $newSlide.append($quoteBox)
     $newSlide.css('background-image', 'url("' + getRandomImage() + '")');
@@ -244,9 +249,9 @@ function makeSlide() {
     var cameraIndex = Math.floor(Math.random()*cameraIDList.length);
     var cameraID = cameraIDList[cameraIndex];
     $newSlide.append('<iframe style="top: -5%; left: -30%; position: relative;" type="text/html" frameborder="0" width="160%" height="110%" src="//video.nest.com/embedded/live/' + cameraID + '?autoplay=1" /></iframe>');
-  } else if (nextSlide == 'SHOWMOREPHOTO') {
+  } else if (nextSlide == 'SHOWPHOTO') {
     // Generate just a plain ol' photo
-    $newSlide.css('background-image', 'url("' + getRandomShowMoreImage() + '")');
+    $newSlide.css('background-image', 'url("' + getRandomshowPhotoImage() + '")');
 
   } else if (nextSlide == 'TIME') {
     // Generate the time
@@ -261,9 +266,13 @@ function makeSlide() {
     if (m < 10) {
       m = '0' + m;
     }
-    $quoteBox = $('<div class="quotebox"><div class="quotecenter time-display">' + h + ':' + m + ' ' + ampm + '</div></div>');
+    // $quoteBox = $('<div class="quotebox"><div class="quotecenter time-display">' + h + ':' + m + ' ' + ampm + '</div></div>');
+
+
+
+    $quoteBox = $('<div class="quotebox" style="background-color: ' + getRandomColor() + ';"><div class="quotecenter"><h3>' + h + ':' + m + ' ' + ampm + '</h3></div></div>');
+   
     $newSlide.append($quoteBox)
-    $newSlide.css('background-image', 'url("' + getRandomImage() + '")');
 
   } else if (nextSlide == 'VIDEO') {
     // Generate the time
@@ -273,7 +282,7 @@ function makeSlide() {
 
   } else {
     // Generate just a plain ol' photo
-    $newSlide.css('background-image', 'url("' + getRandomShowMoreImage() + '")');
+    $newSlide.css('background-image', 'url("' + getRandomshowPhotoImage() + '")');
   }
 
   $('.container').append($newSlide)
@@ -284,6 +293,8 @@ function makeAndMoveSlides() {
 
   makeSlide();
   counter ++;
+  console.log(slideSpeed);
+  console.log(pauseTime);
   // if (counter < 3) { //debugging
     setTimeout(function() {
       checkReload();
@@ -316,8 +327,7 @@ function init() {
   // Set Hard Refresh after 5 minutes
   setTimeout(function() {
     location.reload(); 
-  }, 3000);
-  // }, 300000);
+  }, 300000);
 
   setTimeout(function() {
     makeAndMoveSlides();
@@ -328,10 +338,9 @@ function init() {
 //load all the instagram photos before grabbing anything else 
 var instaGrabber = $.getJSON("insta.json", function(json) {
     instaList = instaList.concat(json); 
-    console.log(instaList);
 });
 
-function photoProcessor(datalist, array) {
+function photoProcessor(url, datalist, array) {
   for (var key in datalist) {
     if (datalist.hasOwnProperty(key) && key.toString() != "__comment") {
         for (var i = 0; i < datalist[key].length; i++) {
@@ -341,7 +350,7 @@ function photoProcessor(datalist, array) {
               prefix = key.substring(0,key.indexOf("|"));
               suffix = "_" + key.substring(key.indexOf("|")+1);
             }
-            array = array.concat(prefix + "m-" + datalist[key][i] + suffix + ".jpg"); 
+            array = array.concat(url + prefix + "m-" + datalist[key][i] + suffix + ".jpg"); 
         }
     }
   }
@@ -349,13 +358,13 @@ function photoProcessor(datalist, array) {
 }
 
 var photosGrabber = $.getJSON("data.json", function(json) {
-  console.log("helllo");
+  photosList = photoProcessor(gallery_url, json[0], photosList);
+  photosList.concat(photoProcessor(gallery_url, json[1], photosList));
+  photosshowPhotoList = photoProcessor(gallery_url, json[2], photosshowPhotoList); // just a plain photo
+  photosshowPhotoList.concat(photoProcessor(gallery_url, json[3], photosshowPhotoList)); // just a plain photo
 
-  photosList = photoProcessor(json[0], photosList);
-  photosShowMoreList = photoProcessor(json[1], photosShowMoreList); // just a plain photo
-
-  videosList = videosList.concat(json[2]["videos"]);
-  quotesList = quotesList.concat(json[2]["quotes"]);
+  videosList = videosList.concat(json[4]["videos"]);
+  quotesList = quotesList.concat(json[4]["quotes"]);
   console.log(quotesList);
 
 });

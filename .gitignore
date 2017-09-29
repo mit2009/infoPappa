@@ -3,3 +3,4 @@ videos/
 display/public/insta.json
 Python/config.py
 .DS_Store
+*.pyc

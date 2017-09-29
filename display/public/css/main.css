@@ -18,6 +18,14 @@ h2 {
   opacity: 0.9;
   line-height: normal;
 }
+h3 {
+  font-size: 24vh;
+  color: #fff;
+  margin: 0 10% 0;
+  width: 60%;
+  opacity: 0.9;
+  line-height: normal;
+}
 .cover {
   position: fixed;
   background-color: rgba(240, 50, 0, 0.8);
