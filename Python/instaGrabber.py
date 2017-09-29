@@ -9,48 +9,46 @@ from InstagramAPI import InstagramAPI
 
 import config
 
-def extractBest(image_versions2):
-    candidates = image_versions2['candidates']
+# def extractBest(image_versions2):
+#     candidates = image_versions2['candidates']
 
-    maxwidth = 0
-    maxitem = ''
+#     maxwidth = 0
+#     maxitem = ''
 
-    for candidate in candidates:
-        if int(candidate['width']) > maxwidth:
-            maxwidth = int(candidate['width'])
-            maxitem = candidate['url']
-    return maxitem
+#     for candidate in candidates:
+#         if int(candidate['width']) > maxwidth:
+#             maxwidth = int(candidate['width'])
+#             maxitem = candidate['url']
+#     return maxitem
 
-def instafeed(hashtag):
+def instafeed(hashtag, count):
+    """Simply use with autoescapeoff, for example: {% autoescape off %}{% instafeed 'manifeste16' 8 %}{% endautoescape %}"""
     feed = []
-
-    api = InstagramAPI(config.username, config.password)
-    api.login() # login
-    api.tagFeed(hashtag)
-    media_id = api.LastJson # last response JSON
-    # print(media_id)
-    for item in media_id['ranked_items']:
-
-        cap = item['caption']['text']
-
-        # print(json.dumps(item, indent=4, sort_keys=True))
-        if 'image_versions2' in item:
-            candidates = item['image_versions2']
-            url = extractBest(candidates)
-
-            feed.append({"display_src": url, "caption": cap})
-        elif 'carousel_media' in item:
-            for image in item['carousel_media']:
-                url = image['image_versions2']
-                feed.append({"display_src": url, "caption": cap})
-
-    print(feed)
-
+    
+    html = ''
+    main_url = 'https://www.instagram.com'
+    query_url = main_url + '/explore/tags/%s' % (hashtag,)
+    # params = 'ig_hashtag(%s){media.first(%s){nodes{caption,display_src}}}' % (hashtag, str(count))
+    # item_html = '<div class="box-item-25"><a href="%s" target="_blank"><img src="%s" alt="%s" title="%s"></a></div>'
+    # print(query_url + params)
+    # r = requests.get(query_url + params)
+    r = requests.get(query_url)
+    parsed = BeautifulSoup(r.content)
+    # j = json.loads(r.content.decode('utf-8'))
+    
+    scriptstuff = parsed.findAll('script')
+    scriptstuff.sort(key=lambda x: len(x.text))
+    actualScript = scriptstuff[-1].text[21:-1]
+    j = json.loads(actualScript)
+    media = j['entry_data']['TagPage'][0]['tag']['media']['nodes']
+    for image in media:
+        caption = image['caption']
+        display_src = image['display_src']
+        feed.append({'caption': caption, 'display_src': display_src})
 
 
+    file = open("/Volumes/courses/2.009/2.009, 2017/infoPappa/display/public/insta.json", "w")
+    json.dump(feed, file)
+    file.close()
 
-    # file = open("/Volumes/courses/2.009/2.009, 2016/infoPappa/display/public/insta.json", "w")
-    # json.dump(j['media']['nodes'], file)
-    # file.close()
-
-instafeed('009mit');
+instafeed('009mit', 16);

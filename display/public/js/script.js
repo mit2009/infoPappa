@@ -21,7 +21,15 @@ instaWeight = 5;
 liveFeedWeight = 2;
 showMoreWeight = 4;
 timeWeight = 2;
-videoWeight = 1 // 2;
+videoWeight = 1; // 2;
+regPhotoWeight = 1;
+
+quoteWeight = 0;
+instaWeight = 0;
+liveFeedWeight = 0;
+showMoreWeight = 0;
+timeWeight = 0;
+videoWeight = 0; // 2;
 regPhotoWeight = 1;
 
 weightSum = quoteWeight + instaWeight + liveFeedWeight + showMoreWeight + videoWeight + regPhotoWeight + timeWeight;
@@ -308,7 +316,8 @@ function init() {
   // Set Hard Refresh after 5 minutes
   setTimeout(function() {
     location.reload(); 
-  }, 300000);
+  }, 3000);
+  // }, 300000);
 
   setTimeout(function() {
     makeAndMoveSlides();
