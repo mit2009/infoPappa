@@ -5,20 +5,6 @@ try:
 except ImportError:
     from bs4 import BeautifulSoup
 
-import config
-
-# def extractBest(image_versions2):
-#     candidates = image_versions2['candidates']
-
-#     maxwidth = 0
-#     maxitem = ''
-
-#     for candidate in candidates:
-#         if int(candidate['width']) > maxwidth:
-#             maxwidth = int(candidate['width'])
-#             maxitem = candidate['url']
-#     return maxitem
-
 def instafeed(hashtag, count):
     """Simply use with autoescapeoff, for example: {% autoescape off %}{% instafeed 'manifeste16' 8 %}{% endautoescape %}"""
     feed = []
