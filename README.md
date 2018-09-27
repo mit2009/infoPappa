@@ -9,6 +9,7 @@ The slideshow that runs in Pappalardo
 - `cd display`
 - `npm start`
 - View on `localhost:3000`
+- On the actual laptop, make sure things are running off of the server so that you can just `git pull` to get the latest fixes.
 
 ## instaGrabber (gets recent photos from instagram)
 - install python, pip, virtualenv
@@ -21,3 +22,6 @@ The slideshow that runs in Pappalardo
 
 ## instaGrabber, to run automatically
 - use cron. I don't remember how this was set up but maybe a future TA will be better at documenting. Otherwise, just run instaGrabber.py whenever you want to update it. This can be done from your local computer, since it maps to the server and the webapp pulls from the server.
+
+## quotes
+- to add/update quotes, just edit `display/public/data.json` appropriately.
