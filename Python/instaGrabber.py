@@ -23,7 +23,7 @@ def instafeed(hashtag, count):
     # print(j['entry_data']['TagPage'][0].keys())
     elements = j['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges']
     nodes = [element['node'] for element in elements]
-    for node in nodes:
+    for node in nodes[:count]:
         caption = node['edge_media_to_caption']['edges'][0]['node']['text']
         display_src = node['display_url']
         feed.append({'caption': caption, 'display_src': display_src})
