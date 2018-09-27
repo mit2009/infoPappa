@@ -7,12 +7,14 @@ const gallery_url = 'http://web.mit.edu/2.009/slideshow/images/';
 const base_url = 'http://web.mit.edu/2.009/';
 // const gallery2_url = 'http://web.mit.edu/2.009/slideshow2/images/';
 
-const colors = ["rgba(255, 0, 0, 0.7)",
-                "rgba(58, 47, 204, 0.7)",
-                "rgba(24, 160, 118, 0.7)",
-                "rgba(103, 32, 206, 0.7)",
-                "rgba(211, 182, 13, 0.7)",
-                "rgba(229, 136, 0, 0.7)"]
+const colors = ["rgba(234, 33, 39, 0.7)",
+                "rgba(137, 77, 157, 0.7)",
+                "rgba(55, 117, 186, 0.7)",
+                "rgba(240, 116, 35, 0.7)",
+                "rgba(79, 181, 72, 0.7)",
+                "rgba(177, 180, 181, 0.7)",
+                "rgba(251,216,0,0.7)",
+                "rgba(238,71,128,0.7)"]
 
 const slideSpeed = 1500;
 const pauseTime = 10000;

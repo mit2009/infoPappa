@@ -16,24 +16,18 @@
             "pink-build.mp4", "silver-build.mp4", "purple-build.mp4", "yellow-build.mp4", "legs.mp4", "balloon1.mp4",
             "balloon2.mp4", "balloon3.mp4", "balloon4.mp4", "vhung.mp4"],
 "quotes":[
-  { "handle": "@009minions", 
-    "message": "I think you're having too much fun with the butt!" },
-  { "handle": "Overheard in Pappalardo", 
-	"message": "Eh, not tonight. That's a tomorrow task." },
-  { "handle": "Tweet Tweet!", 
-    "message": "Follow @PappalardoLab on Twitter!" },
-  { "handle": "Instagram!", 
-    "message": "Use #009mit to see your picture here!" },
-  { "handle": "#009mit", 
-    "message": "Use our hashtag #009mit on Instagram!" },
   { "handle": "send us content!", 
     "message": "email exciting photos/videos to 2009ta@mit.edu :)" },
   { "handle": "Overheard in Pappalardo",
-    "message": "well there's one that's 3.5 stars on amazon... but we could make one that's 5 stars"},
+    "message": "What I've learned in 009: how to stick things to the wall"},
   { "handle": "Overheard in Pappalardo",
-    "message": "there aren't enough TAs here, but there is a tripod so this is probably 2.009"},
-  { "handle": "Overheard in CADlab",
-    "message": "Wallace: it smells like glue in here... Grace, if you don't mind me asking, what are you eating?"}
+    "message": "You're so hot, you're dangerous"},
+  { "handle": "Overheard in Pappalardo",
+    "message": "It's like the 3 Stooges, but there's more of them"},
+  { "handle": "Instagram!", 
+    "message": "Use #009mit to see your picture here!" },
+  { "handle": "send us content!", 
+    "message": "email exciting photos/videos to 2009ta@mit.edu :)" }
   ]
  }]
 
